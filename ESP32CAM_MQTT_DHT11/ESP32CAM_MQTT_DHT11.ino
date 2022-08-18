@@ -50,6 +50,8 @@ int flashLed = 4;  // Para indicar el estatus de conexión el Led flash
 int statusLed = 33; // Para mostrar mensajes recibidos
 long timeNow, timeLast; // Variables de control de tiempo no bloqueante
 int wait = 5000;  // Indica la espera cada 5 segundos para envío de mensajes MQTT
+float hum = dht.readHumidity(); //Se obtiene el valor de humedad
+float temp = dht.readTemperature(); // Se obtiene el valor de temperatura
 
 //Valores iniciales del programa
 void setup() {
@@ -111,8 +113,7 @@ void loop() {
   if (timeNow - timeLast > wait) { // Manda un mensaje por MQTT cada cinco segundos
     timeLast = timeNow; // Actualización de seguimiento de tiempo
     
-  float hum = dht.readHumidity(); //Se obtiene el valor de humedad
-  float temp = dht.readTemperature(); // Se obtiene el valor de temperatura
+
 
   if (isnan(hum) || isnan(temp)) { //Está secuencia se asegura de que la conexión con el sensor exista
     Serial.println(F("¡Error al leer el sensor DHT11"));
@@ -153,13 +154,12 @@ void callback(char* topic, byte* message, unsigned int length) {
   // En esta parte puedes agregar las funciones que requieras para actuar segun lo necesites al recibir un mensaje MQTT
 
   // Ejemplo, en caso de recibir el mensaje true - false, se cambiará el estado del led soldado en la placa.
-  // El NodeMCU está suscrito al tema esp/output
-  if (String(topic) == "codigoIoT/ejemplo/mqttin") {  // En caso de recibirse mensaje en el tema esp32/output
-    if(messageTemp == "true"){
+  if (String(topic) == "codigoIoT/ejemplo/mqttin") {  // En caso de recibirse mensaje en el tema codigoIoT/ejemplo/mqttin
+    if(temp >= 22){
       Serial.println("Led encendido");
       digitalWrite(flashLed, HIGH);
     }// fin del if (String(topic) == "esp32/output")
-    else if(messageTemp == "false"){
+    else if(temp < 22){
       Serial.println("Led apagado");
       digitalWrite(flashLed, LOW);
     }// fin del else if(messageTemp == "false")
