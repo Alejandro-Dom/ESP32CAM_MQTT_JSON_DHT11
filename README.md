@@ -11,4 +11,4 @@ Utilizando Node Red se hará un dashboard que tendrá la siguiente inforamción 
 - Graficará en tiempo los valores de temperatura y humedad.
 - Si la temperatura alcanza un valor X se encenderá el flashLed del microcontrolador.
 
-![](https://github.com/codigo-iot/ESP32CAM_MQTT-Basic/blob/main/esp32camMQTTbasic.jpg)
+![](https://github.com/Alejandro-Dom/ESP32CAM_MQTT_JSON_DHT11/blob/main/Flow_DHT11.png
