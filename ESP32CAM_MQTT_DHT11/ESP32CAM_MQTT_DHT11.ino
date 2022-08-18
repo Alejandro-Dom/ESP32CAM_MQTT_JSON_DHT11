@@ -27,7 +27,7 @@
  //Bibliotecas
 #include <WiFi.h>         //Biblioteca para el control de WiFi
 #include <PubSubClient.h> //Biblioteca para conexión MQTT
-#include <DHT.h>          //Biblioteca para el sensor DHT11
+#include "DHT.h"          //Biblioteca para el sensor DHT11
 
 #define DHTPIN 12     // Se define en que pin recibirá los datos el ESP32CAM, GPIO12
 #define DHTTYPE DHT11 // Se define que tipo de DHT es
@@ -50,13 +50,14 @@ int flashLed = 4;  // Para indicar el estatus de conexión el Led flash
 int statusLed = 33; // Para mostrar mensajes recibidos
 long timeNow, timeLast; // Variables de control de tiempo no bloqueante
 int wait = 5000;  // Indica la espera cada 5 segundos para envío de mensajes MQTT
-float hum = dht.readHumidity(); //Se obtiene el valor de humedad
-float temp = dht.readTemperature(); // Se obtiene el valor de temperatura
+
 
 //Valores iniciales del programa
 void setup() {
   // Iniciar la comunicación serial
   Serial.begin(115200);
+  Serial.println ("Programa iniciado");
+  
   pinMode (flashLed, OUTPUT);
   pinMode (statusLed, OUTPUT);
   digitalWrite (flashLed, LOW);
@@ -113,7 +114,8 @@ void loop() {
   if (timeNow - timeLast > wait) { // Manda un mensaje por MQTT cada cinco segundos
     timeLast = timeNow; // Actualización de seguimiento de tiempo
     
-
+  float hum = dht.readHumidity(); //Se obtiene el valor de humedad
+  float temp = dht.readTemperature(); // Se obtiene el valor de temperatura
 
   if (isnan(hum) || isnan(temp)) { //Está secuencia se asegura de que la conexión con el sensor exista
     Serial.println(F("¡Error al leer el sensor DHT11"));
@@ -135,6 +137,9 @@ void loop() {
 // Esta función permite tomar acciones en caso de que se reciba un mensaje correspondiente a un tema al cual se hará una suscripción
 void callback(char* topic, byte* message, unsigned int length) {
 
+  float hum = dht.readHumidity(); //Se obtiene el valor de humedad
+  float temp = dht.readTemperature(); // Se obtiene el valor de temperatura
+
   // Indicar por serial que llegó un mensaje
   Serial.print("Llegó un mensaje en el tema: ");
   Serial.print(topic);
@@ -155,11 +160,11 @@ void callback(char* topic, byte* message, unsigned int length) {
 
   // Ejemplo, en caso de recibir el mensaje true - false, se cambiará el estado del led soldado en la placa.
   if (String(topic) == "codigoIoT/ejemplo/mqttin") {  // En caso de recibirse mensaje en el tema codigoIoT/ejemplo/mqttin
-    if(temp >= 22){
+    if(messageTemp == "true"){
       Serial.println("Led encendido");
       digitalWrite(flashLed, HIGH);
     }// fin del if (String(topic) == "esp32/output")
-    else if(temp < 22){
+    else if(messageTemp == "false"){
       Serial.println("Led apagado");
       digitalWrite(flashLed, LOW);
     }// fin del else if(messageTemp == "false")
