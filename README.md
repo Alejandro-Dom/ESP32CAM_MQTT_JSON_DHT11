@@ -5,6 +5,8 @@ Este repositorio se enfoca en crear un programa para el micro controlador ESP32C
 - Haga una conexión a una red WiFi
 - Haga una conexión a un broker local para mandar mensajes por MQTT
 - Envie los datos obtenidos del sensor DHT11 en formato JSON
+- Se recibirán los datos por MQTT en el tema codigoIoT/ejemplo/mqtt
+- Se publicarán los datos por MQTT en el tema codigoIoT/ejemplo/mqttin
 
 Utilizando Node Red se hará un dashboard que tendrá la siguiente inforamción y funciones:
 - Mostrará los valores instantáneos de temperatura y humedad, el ID y el estado del flashled.
