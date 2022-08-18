@@ -7,8 +7,12 @@ Este repositorio se enfoca en crear un programa para el micro controlador ESP32C
 - Envie los datos obtenidos del sensor DHT11 en formato JSON
 
 Utilizando Node Red se hará un dashboard que tendrá la siguiente inforamción y funciones:
-- Graficará el valor actual de humedad relativa.
+- Mostrará los valores instantáneos de temperatura y humedad, el ID y el estado del flashled.
 - Graficará en tiempo los valores de temperatura y humedad.
-- Si la temperatura alcanza un valor X se encenderá el flashLed del microcontrolador.
+- Si la temperatura sobrepasa un valor deseado, en mi caso personal serán > 25 °C, se encenderá el flashLed del microcontrolador.
+
+## Configuración de nodos
 
 ![](https://github.com/Alejandro-Dom/ESP32CAM_MQTT_JSON_DHT11/blob/main/Flow_DHT11.png)
+
+##
