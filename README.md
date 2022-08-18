@@ -15,4 +15,7 @@ Utilizando Node Red se hará un dashboard que tendrá la siguiente inforamción 
 
 ![](https://github.com/Alejandro-Dom/ESP32CAM_MQTT_JSON_DHT11/blob/main/Flow_DHT11.png)
 
-##
+## Dashboard
+
+![](https://github.com/Alejandro-Dom/ESP32CAM_MQTT_JSON_DHT11/blob/main/Dashboard_DHT11)
+
